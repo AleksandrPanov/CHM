@@ -172,7 +172,7 @@ public:
         double res = 0.0;
         double h = (b - a) / numPoints;
         double x1 = a, x2 = a + h, x3 = a + 2*h;
-        for (int i = 0; i < numPoints - 1; i+= 4)
+        for (int i = 2; i < numPoints; i+= 2)
         {           
             res += (*f)(x1);
             res += 4.0*(*f)(x2);
@@ -202,7 +202,7 @@ public:
         double res = 0.0;
         double h = (b - a) / numPoints;
         double x1 = a, x2 = a + h, x3 = a + 2 * h,  x4 = a + 3 * h, x5 = a + 4 * h;
-        for (int i = 0; i < numPoints - 4; i += 4)
+        for (int i = 4; i < numPoints; i += 4)
         {
             res += 7.0*(*f)(x1);
             res += 32.0*(*f)(x2);
@@ -236,7 +236,7 @@ public:
         double res = 0.0;
         double h = (b - a) / numPoints;
         double x1 = a, x2 = a + h, x3 = a + 2 * h,  x4 = a + 3 * h;
-        for (int i = 0; i < numPoints - 2; i += 3)
+        for (int i = 3; i < numPoints; i += 3)
         {
             res += (*f)(x1);
             res += 3.0*(*f)(x2);
