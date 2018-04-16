@@ -190,12 +190,44 @@ public:
     }
 };
 
-class Bode_Method5 : CalculateIntegral
+class Simpson_Method4 : CalculateIntegral
 {
 public:
-    Bode_Method5()
+    Simpson_Method4()
     {
-        name = "five-point method Bode";
+        name = "four-point simpson method";
+    }
+    double calculate(MathFuncton *f, double a, double b, int numPoints) override
+    {
+        double res = 0.0;
+        double h = (b - a) / numPoints;
+        double x1 = a, x2 = a + h, x3 = a + 2 * h, x4 = a + 3*h;
+        for (int i = 3; i < numPoints; i += 3)
+        {
+            res += (*f)(x1);
+            res += 3.0*(*f)(x2);
+            res += 3.0*(*f)(x3);
+            res += (*f)(x4);
+
+            x1 += 3 * h;
+            x2 += 3 * h;
+            x3 += 3 * h;
+            x4 += 3 * h;
+        }
+        return res * h / 8.0;
+    }
+    double calculate(MathFuncton *f, double a, double b, double dx) override
+    {
+        return 0.0;
+    }
+};
+
+class Boole_Method5 : CalculateIntegral
+{
+public:
+    Boole_Method5()
+    {
+        name = "five-point method Boole";
     }
     double calculate(MathFuncton *f, double a, double b, int numPoints) override
     {
@@ -204,11 +236,7 @@ public:
         double x1 = a, x2 = a + h, x3 = a + 2 * h,  x4 = a + 3 * h, x5 = a + 4 * h;
         for (int i = 4; i < numPoints; i += 4)
         {
-            res += 7.0*(*f)(x1);
-            res += 32.0*(*f)(x2);
-            res += 12.0*(*f)(x3);
-            res += 32.0*(*f)(x4);
-            res += 7.0*(*f)(x5);
+            res += (2.0*h / 45.0)*(7.0*(*f)(x1) + 32.0*(*f)(x2) + 12.0*(*f)(x3) + 32.0*(*f)(x4) + 7.0*(*f)(x5));
 
             x1 += 4 * h;
             x2 += 4 * h;
@@ -216,7 +244,7 @@ public:
             x4 += 4 * h;
             x5 += 4 * h;
         }
-        return (res * 2.0*h) / 45.0;
+        return res;
     }
     double calculate(MathFuncton *f, double a, double b, double dx) override
     {

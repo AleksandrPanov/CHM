@@ -128,13 +128,16 @@ void init(CalculateInfo &calculateInfo)
     Monte_KarloMethod *m4 = new Monte_KarloMethod();
 	Gauss_Method *m5 = new Gauss_Method();
     Simpson_Method *m6 = new Simpson_Method();
-    Bode_Method5 *m7 = new Bode_Method5();
+    Boole_Method5 *m7 = new Boole_Method5();
     Newton_Cotesa_Method4 *m8 = new Newton_Cotesa_Method4();
+    Simpson_Method4 *m9 = new Simpson_Method4();
 
 	calculateInfo.calculateSchemes = { (CalculateIntegral*)m1, (CalculateIntegral*)m2,
 		(CalculateIntegral*)m3, (CalculateIntegral*)m4,
         (CalculateIntegral*)m5, (CalculateIntegral*)m6,
-        (CalculateIntegral*)m7,  (CalculateIntegral*)m8 };
+        (CalculateIntegral*)m7,  (CalculateIntegral*)m8,
+        (CalculateIntegral*)m9
+    };
 }
 
 int main()
