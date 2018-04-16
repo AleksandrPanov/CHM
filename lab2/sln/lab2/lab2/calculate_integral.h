@@ -165,14 +165,14 @@ class Simpson_Method : CalculateIntegral
 public:
     Simpson_Method()
     {
-        name = "simpson_Method";
+        name = "simpson method";
     }
     double calculate(MathFuncton *f, double a, double b, int numPoints) override
     {
         double res = 0.0;
         double h = (b - a) / numPoints;
         double x1 = a, x2 = a + h, x3 = a + 2*h;
-        for (int i = 0; i < numPoints - 1; i+= 2)
+        for (int i = 0; i < numPoints - 1; i+= 4)
         {           
             res += (*f)(x1);
             res += 4.0*(*f)(x2);
@@ -183,6 +183,72 @@ public:
             x3 += 2*h;
         }
         return res * h / 3.0;
+    }
+    double calculate(MathFuncton *f, double a, double b, double dx) override
+    {
+        return 0.0;
+    }
+};
+
+class Bode_Method5 : CalculateIntegral
+{
+public:
+    Bode_Method5()
+    {
+        name = "five-point method Bode";
+    }
+    double calculate(MathFuncton *f, double a, double b, int numPoints) override
+    {
+        double res = 0.0;
+        double h = (b - a) / numPoints;
+        double x1 = a, x2 = a + h, x3 = a + 2 * h,  x4 = a + 3 * h, x5 = a + 4 * h;
+        for (int i = 0; i < numPoints - 4; i += 4)
+        {
+            res += 7.0*(*f)(x1);
+            res += 32.0*(*f)(x2);
+            res += 12.0*(*f)(x3);
+            res += 32.0*(*f)(x4);
+            res += 7.0*(*f)(x5);
+
+            x1 += 4 * h;
+            x2 += 4 * h;
+            x3 += 4 * h;
+            x4 += 4 * h;
+            x5 += 4 * h;
+        }
+        return (res * 2.0*h) / 45.0;
+    }
+    double calculate(MathFuncton *f, double a, double b, double dx) override
+    {
+        return 0.0;
+    }
+};
+
+class Newton_Cotesa_Method4 : CalculateIntegral
+{
+public:
+    Newton_Cotesa_Method4()
+    {
+        name = "four-point method Newton Cotesa";
+    }
+    double calculate(MathFuncton *f, double a, double b, int numPoints) override
+    {
+        double res = 0.0;
+        double h = (b - a) / numPoints;
+        double x1 = a, x2 = a + h, x3 = a + 2 * h,  x4 = a + 3 * h;
+        for (int i = 0; i < numPoints - 2; i += 3)
+        {
+            res += (*f)(x1);
+            res += 3.0*(*f)(x2);
+            res += 3.0*(*f)(x3);
+            res += (*f)(x4);
+           
+            x1 += 3 * h;
+            x2 += 3 * h;
+            x3 += 3 * h;
+            x4 += 3 * h;           
+        }
+        return (res * 3.0*h) / 8.0;
     }
     double calculate(MathFuncton *f, double a, double b, double dx) override
     {
