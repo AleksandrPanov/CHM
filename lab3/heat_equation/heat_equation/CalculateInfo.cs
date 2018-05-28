@@ -9,9 +9,9 @@ namespace heat_equation
 {
     public class CalculateInfo
     {
-        public double T;
+        public double T = 0.5;
         public double L;
-        public double dt;
+        public double dt = 0.001;
         public double dx;
         public double bCoeff;
 
