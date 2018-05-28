@@ -1,0 +1,64 @@
+﻿<Window x:Class="heat_equation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:heat_equation"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:dvc="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization" Title="Панов А.А лабораторная работа №2"
+        Width="1000" Height="700" KeyDown="Window_KeyDown">
+    <Grid Loaded="Grid_Loaded" x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width ="auto"></ColumnDefinition>
+            <ColumnDefinition Width ="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <WindowsFormsHost Grid.Column="0" Grid.Row="0"><dvc:Chart x:Name="chart" /></WindowsFormsHost>
+        <StackPanel x:Name="stack1" Grid.Column="1" Grid.Row="0">
+            <TextBlock FontSize="20" Height="40" Margin="5 20 5 5">T =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">L =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">t =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">dt =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">dx =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">coeff</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">n =</TextBlock>
+            <TextBlock FontSize="20" Height="40" Margin ="5">α 0</TextBlock>
+        </StackPanel>
+        <StackPanel x:Name="stack2" Grid.Column="2" Grid.Row="0">
+            <TextBox x:Name ="TBox" FontSize="20" MinWidth ="30"  Height="40" Margin="5 20 5 5">0,25</TextBox>
+            <TextBox Name = "LBox" FontSize="20" MinWidth ="30"   Height="40" Margin ="5">1,0</TextBox>
+            <TextBox x:Name ="t_Box" FontSize="20" MinWidth ="30" Height="40" Margin ="5">0,0</TextBox>
+            <TextBox Name ="dtBox" FontSize="20" MinWidth ="30"   Height="40" Margin ="5">0,001</TextBox>
+            <TextBox Name ="dxBox" FontSize="20" MinWidth ="30"   Height="40" Margin ="5">0,1</TextBox>
+            <TextBox Name ="bCoeffBox" FontSize="20" MinWidth ="30" Height="40" Margin ="5">0,0</TextBox>
+            <ComboBox Name="nBox" FontSize="20"                   Height="40" Margin ="5" SelectionChanged="nBox_SelectionChanged">
+                <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+            </ComboBox>
+            <TextBox Name ="aBox" FontSize="20" MinWidth ="30" Height="40" Margin ="5" VerticalContentAlignment="Stretch">1,0</TextBox>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Margin="5">b(x)=</TextBlock>
+        <ComboBox Grid.Column="2"  Grid.Row="1"  FontSize="20" x:Name="bBox" Margin="5">
+            <ComboBoxItem IsSelected="True">coeff</ComboBoxItem>
+            <ComboBoxItem>coeff*x</ComboBoxItem>
+            <ComboBoxItem>coeff*cos(x)</ComboBoxItem>
+            <ComboBoxItem>coeff*sin(x)</ComboBoxItem>
+            <ComboBoxItem>coeff*sin(x)*cos(x)</ComboBoxItem>
+        </ComboBox>
+        <Slider x:Name="tSlider" Grid.Column = "0" Grid.Row="1"
+                Value="0" Minimum="0" Maximum="0.25"
+                SmallChange="0.001" LargeChange="0.001"
+                SelectionStart="0" Height="30"
+                IsSelectionRangeEnabled="True"
+                TickPlacement ="BottomRight"
+                Margin="40 0 30 10" ValueChanged="tSlider_ValueChanged"/>
+    </Grid>
+</Window>

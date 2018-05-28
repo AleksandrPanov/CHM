@@ -171,18 +171,14 @@ public:
     {
         double res = 0.0;
         double h = (b - a) / numPoints;
-        double x1 = a, x2 = a + h, x3 = a + 2*h;
-        for (int i = 2; i < numPoints; i+= 2)
-        {           
-            res += (*f)(x1);
-            res += 4.0*(*f)(x2);
-            res += (*f)(x3);
-
-            x1 += 2*h;
-            x2 += 2*h;
-            x3 += 2*h;
+        double sum4 = 0, sum2 = 0, sum = 0;
+        for (int i = 1; i <= numPoints; i += 2)
+        {
+            sum4 += (*f)(a + h*i);//Значения с нечётными индексами, которые нужно умножить на 4.
+            sum2 += (*f)(a + h*(i + 1));//Значения с чётными индексами, которые нужно умножить на 2.
         }
-        return res * h / 3.0;
+        sum = (*f)(a) + 4 * sum4 + 2 * sum2 - (*f)(b);//Отнимаем значение f(b) так как ранее прибавили его дважды. 
+        return (h / 3)*sum;
     }
     double calculate(MathFuncton *f, double a, double b, double dx) override
     {

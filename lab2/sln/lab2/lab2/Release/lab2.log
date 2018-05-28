@@ -1,0 +1,11 @@
+﻿  main.cpp
+e:\projects\labs\chm\lab2\sln\lab2\lab2\calculate_integral.h(7): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+main.cpp(72): warning C4018: '<': signed/unsigned mismatch
+main.cpp(79): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  0 of 387 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  lab2.vcxproj -> E:\projects\labs\CHM\lab2\sln\lab2\Release\lab2.exe
+  lab2.vcxproj -> E:\projects\labs\CHM\lab2\sln\lab2\Release\lab2.pdb (Full PDB)

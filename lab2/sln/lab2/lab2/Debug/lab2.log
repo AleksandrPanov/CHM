@@ -1,0 +1,6 @@
+﻿  main.cpp
+e:\projects\labs\chm\lab2\sln\lab2\lab2\calculate_integral.h(7): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\projects\labs\chm\lab2\sln\lab2\lab2\main.cpp(72): warning C4018: '<': signed/unsigned mismatch
+e:\projects\labs\chm\lab2\sln\lab2\lab2\main.cpp(79): warning C4018: '<': signed/unsigned mismatch
+  lab2.vcxproj -> E:\projects\labs\CHM\lab2\sln\lab2\Debug\lab2.exe
+  lab2.vcxproj -> E:\projects\labs\CHM\lab2\sln\lab2\Debug\lab2.pdb (Full PDB)
