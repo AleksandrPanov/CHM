@@ -68,8 +68,7 @@ namespace heat_equation
                 for (int k = 1; k < alpha.Length; k++)
                 {
                     double x = i * dx;
-                    double tmp = Math.Cos(i * lambda * x);
-                    resDirect[0][i] += Math.Cos(i * lambda * x) * alpha[k];                   
+                    resDirect[0][i] += Math.Cos(k * lambda * x) * alpha[k];                   
                 }
                 resImplicit[0][i] = resDirect[0][i];
             }
