@@ -42,6 +42,7 @@
                 <ComboBoxItem>3</ComboBoxItem>
                 <ComboBoxItem>4</ComboBoxItem>
                 <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
             </ComboBox>
             <TextBox Name ="aBox" FontSize="20" MinWidth ="30" Height="40" Margin ="5" VerticalContentAlignment="Stretch">1,0</TextBox>
         </StackPanel>
