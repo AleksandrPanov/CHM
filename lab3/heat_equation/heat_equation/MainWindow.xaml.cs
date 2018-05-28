@@ -35,28 +35,39 @@ namespace heat_equation
             chart.ChartAreas[0].AxisX.Interval = 1;
 
             // Добавим линию, и назначим ее в ранее созданную область "Default"
-            chart.Series.Add(new Series("Series1"));
-            chart.Series["Series1"].ChartArea = "Default";
-            chart.Series["Series1"].ChartType = SeriesChartType.Line;
+            chart.Series.Add(new Series("Начальные условия U(0,t)"));
+            chart.Series["Начальные условия U(0,t)"].ChartArea = "Default";
+            chart.Series["Начальные условия U(0,t)"].ChartType = SeriesChartType.Line;
+            chart.Series["Начальные условия U(0,t)"].BorderDashStyle = ChartDashStyle.Dash;
+            chart.Series["Начальные условия U(0,t)"].BorderWidth = 2;
+            chart.Legends.Add(new Legend("Legend1"));
 
-            chart.Series.Add(new Series("Series2"));
-            chart.Series["Series2"].ChartArea = "Default";
-            chart.Series["Series2"].ChartType = SeriesChartType.Line;
+            chart.Legends["Legend1"].DockedToChartArea = "Default";
+            chart.Series["Начальные условия U(0,t)"].Legend = "Legend1";
+            chart.Series["Начальные условия U(0,t)"].IsVisibleInLegend = true;
 
-            chart.Series.Add(new Series("Series3"));
-            chart.Series["Series3"].ChartArea = "Default";
-            chart.Series["Series3"].ChartType = SeriesChartType.Line;
+            chart.Series.Add(new Series("Явный метод"));
+            chart.Series["Явный метод"].ChartArea = "Default";
+            chart.Series["Явный метод"].ChartType = SeriesChartType.Line;
+            chart.Series["Явный метод"].Color = System.Drawing.Color.Red;
+            chart.Series["Явный метод"].BorderWidth = 2;
+
+            chart.Series.Add(new Series("Неявный метод"));
+            chart.Series["Неявный метод"].ChartArea = "Default";
+            chart.Series["Неявный метод"].ChartType = SeriesChartType.Line;
+            chart.Series["Неявный метод"].Color = System.Drawing.Color.Green;
+            chart.Series["Неявный метод"].BorderWidth = 2;
 
             // добавим данные линии
             string[] axisXData = new string[] { "a", "b", "c" };
             double[] axisYData = new double[] { 0.1, 1.5, 1.9};
-            chart.Series["Series1"].Points.DataBindXY(axisXData, axisYData);
+            chart.Series["Начальные условия U(0,t)"].Points.DataBindXY(axisXData, axisYData);
 
             axisYData = new double[] { -0.1, 0.5, 0.9 };
-            chart.Series["Series2"].Points.DataBindXY(axisXData, axisYData);
+            chart.Series["Явный метод"].Points.DataBindXY(axisXData, axisYData);
 
             axisYData = new double[] { -0.5, 2, -0.1 };
-            chart.Series["Series3"].Points.DataBindXY(axisXData, axisYData);
+            chart.Series["Неявный метод"].Points.DataBindXY(axisXData, axisYData);
         }
 
         private bool validation()
@@ -67,32 +78,37 @@ namespace heat_equation
             try { setT(getFormT()); }   
             catch
             {
-                error+="T должно быть положительным вещественным числом\n";
+                error+="T должен быть положительным вещественным числом\n";
             }
             try { setL(getFormL());}
             catch
             {
-                error += ("L должно быть положительным вещественным числом\n");
+                error += ("L должен быть положительным вещественным числом\n");
             }
             try { set_t(getForm_tBox()); }
             catch
             {
-                error += ("t должно быть неотрицательным вещественным числом и быть меньше T\n");
+                error += ("t должен быть неотрицательным вещественным числом и быть меньше T\n");
             }
             try { set_dt(getFormDt()); }
             catch
             {
-                error += ("dt должно быть положительным вещественным числом\n");
+                error += ("dt должен быть положительным вещественным числом\n");
             }
             try { set_dx(getFormDx()); }
             catch
             {
-                error += ("dx должно быть положительным вещественным числом\n");
+                error += ("dx должен быть положительным вещественным числом\n");
+            }
+            try { setBCoeff(getFormBCoeff()); }
+            catch
+            {
+                error += ("coeff должен быть положительным вещественным числом\n");
             }
             try { calc.alpha = getFormAlpha(); }
             catch
             {
-                error += ("α должно быть вещественным числом");
+                error += ("α должен быть вещественным числом");
             }
             if (error != "")
             {
@@ -170,6 +186,21 @@ namespace heat_equation
             return dx;
         }
 
+        private void setBCoeff(double bCoeff)
+        {
+            calc.bCoeff = bCoeff;
+            bCoeffBox.Text = bCoeff.ToString();
+        }
+        private double getFormBCoeff()
+        {
+            return Convert.ToDouble(bCoeffBox.Text);
+        }
+        private void setBx()
+        {
+            ComboBoxItem item = (ComboBoxItem)bBox.SelectedItem;
+            calc.b = (string)item.Content;
+        }
+
         private int getFormN()
         {
             ComboBoxItem item = (ComboBoxItem)nBox.SelectedItem;
@@ -198,8 +229,8 @@ namespace heat_equation
             int indexT = (int)(t / calc.dt);
             if (calc.resDirect.Count > indexT)
             {
-                chart.Series["Series2"].Points.DataBindXY(calc.x, calc.resDirect[indexT]);
-                chart.Series["Series3"].Points.DataBindXY(calc.x, calc.resImplicit[indexT]);
+                chart.Series["Явный метод"].Points.DataBindXY(calc.x, calc.resDirect[indexT]);
+                chart.Series["Неявный метод"].Points.DataBindXY(calc.x, calc.resImplicit[indexT]);
             }
         }
         private void nBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -240,6 +271,7 @@ namespace heat_equation
             if (e.Key == Key.Space)
             {
                 set_t(0.0);
+                setBx();
                 if (validation())
                 {
                     try
@@ -254,9 +286,9 @@ namespace heat_equation
                         }
                         else
                             chart.ChartAreas[0].AxisX.Interval = calc.dx;
-                        chart.Series["Series1"].Points.DataBindXY(calc.x, calc.resDirect[0]);
-                        chart.Series["Series2"].Points.DataBindXY(calc.x, calc.resDirect[indexT]);
-                        chart.Series["Series3"].Points.DataBindXY(calc.x, calc.resImplicit[indexT]);
+                        chart.Series["Начальные условия U(0,t)"].Points.DataBindXY(calc.x, calc.resDirect[0]);
+                        chart.Series["Явный метод"].Points.DataBindXY(calc.x, calc.resDirect[indexT]);
+                        chart.Series["Неявный метод"].Points.DataBindXY(calc.x, calc.resImplicit[indexT]);
                     }
                     catch(OverflowException ex)
                     {

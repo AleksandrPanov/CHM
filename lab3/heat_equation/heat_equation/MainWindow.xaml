@@ -46,7 +46,7 @@
             <TextBox Name ="aBox" FontSize="20" MinWidth ="30" Height="40" Margin ="5" VerticalContentAlignment="Stretch">1,0</TextBox>
         </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Margin="5">b(x)=</TextBlock>
-        <ComboBox Grid.Column="2"  Grid.Row="1"  FontSize="20" x:Name="bBox" Margin="5">
+        <ComboBox Grid.Column="2"  Grid.Row="1"  FontSize="20" x:Name="bBox" Margin="5,0,5,5" Height="35" VerticalAlignment="Bottom">
             <ComboBoxItem IsSelected="True">coeff</ComboBoxItem>
             <ComboBoxItem>coeff*x</ComboBoxItem>
             <ComboBoxItem>coeff*cos(x)</ComboBoxItem>

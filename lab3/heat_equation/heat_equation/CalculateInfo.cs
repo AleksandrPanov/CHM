@@ -39,6 +39,23 @@ namespace heat_equation
         }
         private double calcB(double x)
         {
+            switch (b)
+            {
+                case "coeff":
+                    return bCoeff;
+
+                case "coeff*x":
+                    return bCoeff*x;
+
+                case "coeff*cos(x)":
+                    return bCoeff*Math.Cos(x);
+
+                case "coeff*sin(x)":
+                    return bCoeff * Math.Sin(x);
+
+                case "coeff*sin(x)*cos(x)":
+                    return bCoeff * Math.Cos(x) * Math.Sin(x);
+            }
             return 0.0;
         }
         private void init()
@@ -51,6 +68,7 @@ namespace heat_equation
                 for (int k = 1; k < alpha.Length; k++)
                 {
                     double x = i * dx;
+                    double tmp = Math.Cos(i * lambda * x);
                     resDirect[0][i] += Math.Cos(i * lambda * x) * alpha[k];                   
                 }
                 resImplicit[0][i] = resDirect[0][i];
@@ -96,14 +114,14 @@ namespace heat_equation
             {
                 //init
                 c[0] = 1 / dt + tmp;
-                f[0] = resImplicit[j][0] / dt - calcB(0) * resImplicit[j][0];
+                f[0] = resImplicit[j][0] / dt + calcB(0) * resImplicit[j][0];
                 for (int i = 1; i < sizeX - 1; i++)
                 {
                     c[i] = 1 / dt + 2 * tmp;
-                    f[i] = resImplicit[j][i] / dt - calcB(i*dx)*resImplicit[j][i];
+                    f[i] = resImplicit[j][i] / dt + calcB(i*dx)*resImplicit[j][i];
                 }
                 c[sizeX - 1] = 1 / dt + tmp;
-                f[sizeX - 1] = resImplicit[j][0] / dt - calcB((sizeX-1)*dx) * resImplicit[j][sizeX - 1];
+                f[sizeX - 1] = resImplicit[j][sizeX - 1] / dt + calcB((sizeX-1)*dx) * resImplicit[j][sizeX - 1];
                
                  //calculate
                 for (int i = 1; i < sizeX; i++)
