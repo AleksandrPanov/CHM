@@ -94,9 +94,8 @@ namespace heat_equation
                     if (resDirect[j + 1][i] > 100000)
                         throw new OverflowException();
                 }
-                resDirect[j + 1][0] = (resDirect[j][1] - resDirect[j][0]) * dt / (dx * dx) + calcB(0) * resDirect[j][0] * dt + resDirect[j][0];
-                resDirect[j + 1][sizeX - 1] = (resDirect[j][sizeX - 2] - resDirect[j][sizeX - 1]) * dt / (dx * dx)
-                    + calcB((sizeX - 1) * dx) * resDirect[j][sizeX - 1] * dt + resDirect[j][sizeX - 1];
+                resDirect[j + 1][0] = resDirect[j + 1][1];
+                resDirect[j + 1][sizeX - 1] = resDirect[j + 1][sizeX - 2];
             }
         }
         private void calculateImplicit()
@@ -104,7 +103,9 @@ namespace heat_equation
             int sizeX = resImplicit[0].Length;
             double tmp = 1.0 / (dx * dx);
             double a = -tmp;
+            double a_n = -1;
             double b = -tmp;
+            double b_0 = -1;
             double[] c = new double[sizeX];
             double[] f = new double[sizeX];
 
@@ -112,26 +113,34 @@ namespace heat_equation
             for (int j = 0; j < resImplicit.Count - 1; j++)
             {
                 //init
-                c[0] = 1 / dt + tmp;
-                f[0] = resImplicit[j][0] / dt + calcB(0) * resImplicit[j][0];
+                c[0] = 1;
+                f[0] = 0;            
                 for (int i = 1; i < sizeX - 1; i++)
                 {
                     c[i] = 1 / dt + 2 * tmp;
                     f[i] = resImplicit[j][i] / dt + calcB(i*dx)*resImplicit[j][i];
                 }
-                c[sizeX - 1] = 1 / dt + tmp;
-                f[sizeX - 1] = resImplicit[j][sizeX - 1] / dt + calcB((sizeX-1)*dx) * resImplicit[j][sizeX - 1];
-               
-                 //calculate
-                for (int i = 1; i < sizeX; i++)
+                c[sizeX - 1] = 1;
+                f[sizeX - 1] = 0;
+
+                //calculate
+                m = a / c[0];
+                c[1] -= m * b_0;
+                f[1] -= m * f[0];
+                for (int i = 2; i < sizeX-1; i++)
                 {                
                     m = a / c[i - 1];
                     c[i] -= m * b;
                     f[i] -= m * f[i - 1];
                 }
+                m = a_n / c[sizeX-2];
+                c[sizeX - 1] -= m * b;
+                f[sizeX - 1] -= m * f[sizeX - 2];
+
                 resImplicit[j + 1][sizeX - 1] = f[sizeX - 1] / c[sizeX - 1];
-                for (int i = sizeX - 2; i >= 0; i--)
+                for (int i = sizeX - 2; i >= 1; i--)
                     resImplicit[j+1][i] = (f[i] - b * resImplicit[j + 1][i + 1]) / c[i];
+                resImplicit[j + 1][0] = (f[0] - b_0 * resImplicit[j + 1][1]) / c[0];
             }
         }
     }
