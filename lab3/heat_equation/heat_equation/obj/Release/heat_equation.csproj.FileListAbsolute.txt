@@ -59,7 +59,6 @@ C:\Users\Александр\Desktop\heat_equation2\heat_equation\obj\Release\hea
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\bin\Release\heat_equation.exe.config
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\bin\Release\heat_equation.exe
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\bin\Release\heat_equation.pdb
-E:\projects\labs\CHM\lab3\heat_equation\heat_equation\obj\Release\heat_equation.csprojResolveAssemblyReference.cache
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\obj\Release\MainWindow.g.cs
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\obj\Release\App.g.cs
 E:\projects\labs\CHM\lab3\heat_equation\heat_equation\obj\Release\heat_equation_MarkupCompile.cache

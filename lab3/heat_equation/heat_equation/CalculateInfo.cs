@@ -82,7 +82,8 @@ namespace heat_equation
         }
         private void calculateDirect()
         {
-            int sizeX = resDirect[0].Length;
+            //var fs = new System.IO.StreamWriter(@"явный.txt", true);
+            int sizeX = resDirect[0].Length;           
             for (int j = 0; j < resDirect.Count - 1; j++)
             {
                 for (int i = 1; i < sizeX - 1; i++)
@@ -96,10 +97,16 @@ namespace heat_equation
                 }
                 resDirect[j + 1][0] = resDirect[j + 1][1];
                 resDirect[j + 1][sizeX - 1] = resDirect[j + 1][sizeX - 2];
+                //for (int i = 0; i < sizeX; i++)
+                //    fs.Write(resDirect[j][i].ToString()+" ");
+                //fs.Write("\n");
             }
+            //for (int i = 0; i < sizeX; i++)
+            //    fs.Write(resDirect[sizeX - 1][i].ToString() + " ");
         }
         private void calculateImplicit()
         {
+            //var fs = new System.IO.StreamWriter(@"неявный.txt", true);
             int sizeX = resImplicit[0].Length;
             double tmp = 1.0 / (dx * dx);
             double a = -tmp;
@@ -117,8 +124,10 @@ namespace heat_equation
                 f[0] = 0;            
                 for (int i = 1; i < sizeX - 1; i++)
                 {
-                    c[i] = 1 / dt + 2 * tmp;
-                    f[i] = resImplicit[j][i] / dt + calcB(i*dx)*resImplicit[j][i];
+                    //c[i] = 1 / dt + 2 * tmp;
+                    //f[i] = resImplicit[j][i] / dt + calcB(i*dx)*resImplicit[j][i];
+                    c[i] = 1 / dt + 2 * tmp - calcB(i * dx);
+                    f[i] = resImplicit[j][i] / dt;
                 }
                 c[sizeX - 1] = 1;
                 f[sizeX - 1] = 0;
@@ -141,7 +150,12 @@ namespace heat_equation
                 for (int i = sizeX - 2; i >= 1; i--)
                     resImplicit[j+1][i] = (f[i] - b * resImplicit[j + 1][i + 1]) / c[i];
                 resImplicit[j + 1][0] = (f[0] - b_0 * resImplicit[j + 1][1]) / c[0];
+                //for (int i = 0; i < sizeX; i++)
+                //    fs.Write(resImplicit[j][i].ToString() + " ");
+                //fs.Write("\n");
             }
+            //for (int i = 0; i < sizeX; i++)
+            //   fs.Write(resImplicit[sizeX - 1][i].ToString() + " ");
         }
     }
 }
